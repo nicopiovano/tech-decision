@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base mínima para el producto (sin framework UI pesado).
+   La mayoría del styling vive en clases Tailwind para mantenerlo explícito y local. */
+html,
+body,
+#app {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, 'Apple Color Emoji',
+    'Segoe UI Emoji';
+}

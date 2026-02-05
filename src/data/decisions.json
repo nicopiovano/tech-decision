@@ -1,0 +1,180 @@
+{
+    "startDecisionId": "setup-001",
+    "decisions": [
+        {
+            "id": "setup-001",
+            "phase": "setup",
+            "title": "Base técnica inicial",
+            "prompt": "Estás arrancando. ¿Cómo equilibrás velocidad hoy vs mantenibilidad mañana?",
+            "nextDecisionId": "mvp-001",
+            "options": [
+                {
+                    "id": "monolith-pragmatic",
+                    "label": "Monolito simple + buenas prácticas",
+                    "description": "Estructura clara, testing básico y CI liviano. Evitás sobre-arquitectura.",
+                    "effects": {
+                        "technicalDebt": -5,
+                        "velocity": 8,
+                        "maintainability": 8,
+                        "stability": 4,
+                        "teamMorale": 3,
+                        "timeToMarket": -6
+                    }
+                },
+                {
+                    "id": "microservices-early",
+                    "label": "Microservicios desde el día 1",
+                    "description": "Aislás dominios, pero aumentás complejidad operativa antes de tener tracción.",
+                    "effects": {
+                        "technicalDebt": 8,
+                        "velocity": -10,
+                        "maintainability": -2,
+                        "stability": -6,
+                        "teamMorale": -4,
+                        "timeToMarket": 10
+                    }
+                }
+            ]
+        },
+        {
+            "id": "mvp-001",
+            "phase": "mvp",
+            "title": "Entrega del MVP",
+            "prompt": "El negocio quiere salir ya. ¿Qué priorizás en el MVP?",
+            "nextDecisionId": "growth-001",
+            "options": [
+                {
+                    "id": "ship-fast",
+                    "label": "Ship rápido (features primero)",
+                    "description": "Salís al mercado antes, pero acumulás deuda que te frena después.",
+                    "effects": {
+                        "technicalDebt": 12,
+                        "velocity": 10,
+                        "maintainability": -8,
+                        "stability": -6,
+                        "teamMorale": -2,
+                        "timeToMarket": -12
+                    }
+                },
+                {
+                    "id": "quality-gate",
+                    "label": "Calidad mínima (guardrails)",
+                    "description": "Definís límites: linters, tests clave y observabilidad básica.",
+                    "effects": {
+                        "technicalDebt": -3,
+                        "velocity": -2,
+                        "maintainability": 10,
+                        "stability": 8,
+                        "teamMorale": 4,
+                        "timeToMarket": 3
+                    }
+                }
+            ]
+        },
+        {
+            "id": "growth-001",
+            "phase": "growth",
+            "title": "Escalando el equipo",
+            "prompt": "Empiezan a sumar devs y el throughput se vuelve impredecible. ¿Qué hacés?",
+            "nextDecisionId": "scale-001",
+            "options": [
+                {
+                    "id": "hire-only",
+                    "label": "Contratar más (sin cambiar procesos)",
+                    "description": "Sube output al inicio, pero la coordinación y bugs se disparan.",
+                    "effects": {
+                        "technicalDebt": 6,
+                        "velocity": 6,
+                        "maintainability": -4,
+                        "stability": -8,
+                        "teamMorale": -4,
+                        "timeToMarket": -3
+                    }
+                },
+                {
+                    "id": "platform-basics",
+                    "label": "Invertir en platform basics",
+                    "description": "CI/CD, ownership, definición de DoD y monitoreo. Escala con menos caos.",
+                    "effects": {
+                        "technicalDebt": -4,
+                        "velocity": 2,
+                        "maintainability": 8,
+                        "stability": 10,
+                        "teamMorale": 6,
+                        "timeToMarket": 2
+                    }
+                }
+            ]
+        },
+        {
+            "id": "scale-001",
+            "phase": "scale",
+            "title": "Performance y confiabilidad",
+            "prompt": "El tráfico crece y aparecen cuellos de botella. ¿Dónde invertís primero?",
+            "nextDecisionId": "crisis-001",
+            "options": [
+                {
+                    "id": "cache-everything",
+                    "label": "Cache agresivo sin métricas",
+                    "description": "Mejora rápido pero con riesgo de inconsistencias difíciles de depurar.",
+                    "effects": {
+                        "technicalDebt": 10,
+                        "velocity": 4,
+                        "maintainability": -8,
+                        "stability": -2,
+                        "teamMorale": -3,
+                        "timeToMarket": -4
+                    }
+                },
+                {
+                    "id": "measure-then-optimize",
+                    "label": "Medir primero (SLOs + profiling)",
+                    "description": "Observabilidad, objetivos y mejoras focalizadas que se mantienen en el tiempo.",
+                    "effects": {
+                        "technicalDebt": -2,
+                        "velocity": -1,
+                        "maintainability": 6,
+                        "stability": 12,
+                        "teamMorale": 4,
+                        "timeToMarket": 2
+                    }
+                }
+            ]
+        },
+        {
+            "id": "crisis-001",
+            "phase": "crisis",
+            "title": "Incidente en producción",
+            "prompt": "Se cae el servicio en hora pico. ¿Cómo respondés como equipo?",
+            "nextDecisionId": null,
+            "options": [
+                {
+                    "id": "hero-mode",
+                    "label": "Modo héroe (parche ya)",
+                    "description": "Se recupera rápido, pero deja cicatrices: deuda, burnout y repetición.",
+                    "effects": {
+                        "technicalDebt": 14,
+                        "velocity": 2,
+                        "maintainability": -10,
+                        "stability": -6,
+                        "teamMorale": -12,
+                        "timeToMarket": -2
+                    }
+                },
+                {
+                    "id": "blameless-rca",
+                    "label": "Respuesta blameless + RCA",
+                    "description": "Mitigás, comunicás, y después cerrás con acciones preventivas.",
+                    "effects": {
+                        "technicalDebt": -1,
+                        "velocity": -1,
+                        "maintainability": 6,
+                        "stability": 8,
+                        "teamMorale": 10,
+                        "timeToMarket": 2
+                    }
+                }
+            ]
+        }
+    ]
+}
