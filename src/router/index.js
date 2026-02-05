@@ -4,7 +4,6 @@ import IntroView from '../views/IntroView.vue'
 import SetupView from '../views/SetupView.vue'
 import TimelineView from '../views/TimelineView.vue'
 import DecisionView from '../views/DecisionView.vue'
-import DashboardView from '../views/DashboardView.vue'
 import PostMortemView from '../views/PostMortemView.vue'
 
 /**
@@ -19,8 +18,9 @@ export const router = createRouter({
     { path: '/setup', name: 'setup', component: SetupView },
     { path: '/timeline', name: 'timeline', component: TimelineView },
     { path: '/decision/:id', name: 'decision', component: DecisionView, props: true },
-    { path: '/dashboard', name: 'dashboard', component: DashboardView },
     { path: '/post-mortem', name: 'post-mortem', component: PostMortemView },
+    // Compat: ruta antigua. Si alguien tiene bookmark, no rompe.
+    { path: '/dashboard', redirect: '/post-mortem' },
     { path: '/:pathMatch(.*)*', redirect: '/intro' },
   ],
 })

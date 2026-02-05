@@ -24,7 +24,7 @@ const health = computed(() => ({
   Velocidad: clamp(props.metrics.velocity),
   Mantenibilidad: clamp(props.metrics.maintainability),
   Estabilidad: clamp(props.metrics.stability),
-  Morale: clamp(props.metrics.teamMorale),
+  Moral: clamp(props.metrics.teamMorale),
   'Time-to-market (invertido)': 100 - clamp(props.metrics.timeToMarket),
 }))
 
@@ -34,9 +34,9 @@ const chartData = computed(() => ({
     {
       label: 'Salud del proyecto',
       data: Object.values(health.value),
-      borderColor: '#60a5fa',
-      backgroundColor: 'rgba(96,165,250,0.15)',
-      pointBackgroundColor: '#60a5fa',
+      borderColor: '#10b981',
+      backgroundColor: 'rgba(16,185,129,0.16)',
+      pointBackgroundColor: '#10b981',
       borderWidth: 2,
     },
   ],

@@ -60,6 +60,11 @@
                     "id": "quality-gate",
                     "label": "Calidad mínima (guardrails)",
                     "description": "Definís límites: linters, tests clave y observabilidad básica.",
+                    "availableIf": {
+                        "technicalDebt": {
+                            "lte": 70
+                        }
+                    },
                     "effects": {
                         "technicalDebt": -3,
                         "velocity": -2,

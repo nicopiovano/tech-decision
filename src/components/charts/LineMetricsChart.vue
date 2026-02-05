@@ -25,12 +25,23 @@ const LABELS = {
 }
 
 const COLORS = {
-  technicalDebt: '#f97316',
-  velocity: '#22c55e',
-  maintainability: '#60a5fa',
-  stability: '#a78bfa',
-  teamMorale: '#f472b6',
-  timeToMarket: '#eab308',
+  // Paleta con alto contraste sobre fondo oscuro (tema verde), evitando tonos demasiado similares.
+  // Intención: deuda/ttm resaltan como “riesgo” (cálidos); el resto va por gama fría/verde.
+  technicalDebt: '#fb7185', // rose-400
+  velocity: '#34d399', // emerald-400
+  maintainability: '#22d3ee', // cyan-400
+  stability: '#2dd4bf', // teal-400
+  teamMorale: '#a3e635', // lime-400
+  timeToMarket: '#fbbf24', // amber-400
+}
+
+const STYLES = {
+  technicalDebt: { borderDash: [], pointStyle: 'triangle' },
+  velocity: { borderDash: [], pointStyle: 'circle' },
+  maintainability: { borderDash: [6, 4], pointStyle: 'rectRounded' },
+  stability: { borderDash: [2, 3], pointStyle: 'rect' },
+  teamMorale: { borderDash: [10, 4], pointStyle: 'star' },
+  timeToMarket: { borderDash: [4, 2], pointStyle: 'crossRot' },
 }
 
 const keys = computed(() => {
@@ -52,6 +63,8 @@ const chartData = computed(() => ({
     borderWidth: 2,
     pointRadius: 2,
     pointHoverRadius: 5,
+    borderDash: STYLES[k]?.borderDash || [],
+    pointStyle: STYLES[k]?.pointStyle || 'circle',
   })),
 }))
 
