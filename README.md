@@ -63,8 +63,6 @@ npm run preview
 - `/decision/:id`: tomar una decisión (o editar una anterior)
 - `/post-mortem`: resumen final + métricas + gráficos
 
-> Nota: `/dashboard` ya no existe; si accedés, redirige a `/post-mortem` por compatibilidad.
-
 ---
 
 ## 🧩 Arquitectura (pensada como producto)
@@ -80,7 +78,7 @@ npm run preview
 
 1. El usuario elige una opción.
 2. Esa opción trae `effects` (deltas numéricos por métrica).
-3. El engine suma esos deltas y clampa a 0..100.
+3. El engine suma esos deltas numéricos y modifica entre 0 y 100 las variables.
 4. El store guarda un snapshot en `history`.
 5. Los charts leen `history` y lo dibujan.
 
@@ -125,7 +123,6 @@ Ejemplo (resumido):
 En `/timeline` podés tocar **Modificar** en un paso ya respondido.
 
 - Al editar una respuesta, el store **reconstruye el historial desde el baseline** (para que todo quede consistente).
-- Si una decisión posterior queda inválida por reglas, el simulador corta el futuro y te fuerza a redecidir desde ese punto.
 
 ---
 
