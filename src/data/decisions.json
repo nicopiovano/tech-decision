@@ -13,7 +13,7 @@
                     "label": "Monolito simple + buenas prácticas",
                     "description": "Estructura clara, testing básico y CI liviano. Evitás sobre-arquitectura.",
                     "effects": {
-                        "technicalDebt": -5,
+                        "technicalDebt": -6,
                         "velocity": 8,
                         "maintainability": 8,
                         "stability": 4,
