@@ -34,9 +34,9 @@ const chartData = computed(() => ({
     {
       label: 'Salud del proyecto',
       data: Object.values(health.value),
-      borderColor: '#10b981',
-      backgroundColor: 'rgba(16,185,129,0.16)',
-      pointBackgroundColor: '#10b981',
+      borderColor: '#cbd5e1',
+      backgroundColor: 'rgba(203,213,225,0.10)',
+      pointBackgroundColor: '#cbd5e1',
       borderWidth: 2,
     },
   ],

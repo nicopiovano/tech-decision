@@ -87,25 +87,25 @@ function selectOption(optionId) {
       <h1 class="text-xl font-semibold">
         {{ decision?.title || 'Decisión no encontrada' }}
       </h1>
-      <p v-if="decision" class="text-sm text-emerald-100/80">
+      <p v-if="decision" class="text-sm text-zinc-300">
         {{ decision.prompt }}
       </p>
-      <p class="text-xs text-emerald-200/60">
+      <p class="text-xs text-zinc-500">
         Decision ID: {{ route.params.id }}
       </p>
-      <p v-if="isEditMode" class="text-xs text-emerald-200">
+      <p v-if="isEditMode" class="text-xs text-zinc-300">
         Editando respuesta del paso #{{ editStep }} (se recalcula el historial).
       </p>
     </header>
 
     <!-- Decision missing -->
     <div v-if="!decision" class="space-y-3">
-      <p class="text-sm text-emerald-100/80">
+      <p class="text-sm text-zinc-300">
         No existe un JSON para este ID.
       </p>
       <RouterLink
         to="/timeline"
-        class="inline-flex rounded-md border border-emerald-800 px-4 py-2 text-sm font-medium text-emerald-50 hover:bg-emerald-900/30"
+        class="inline-flex rounded-md border border-zinc-700 px-4 py-2 text-sm font-medium text-zinc-100 hover:bg-zinc-900"
       >
         Volver a timeline
       </RouterLink>
@@ -116,16 +116,16 @@ function selectOption(optionId) {
       <button
         v-for="opt in availableOptions"
         :key="opt.id"
-        class="text-left rounded-lg border bg-emerald-900/20 p-4 transition hover:bg-emerald-900/30"
+        class="text-left rounded-lg border bg-zinc-900/40 p-4 transition hover:bg-zinc-900"
         :class="[
-          opt.id === currentSelectionId ? 'border-emerald-500/70' : 'border-emerald-900 hover:border-emerald-800',
+          opt.id === currentSelectionId ? 'border-zinc-500/70' : 'border-zinc-800 hover:border-zinc-600',
         ]"
         @click="selectOption(opt.id)"
       >
         <div class="text-sm font-semibold">
           {{ opt.label }}
         </div>
-        <div class="text-xs text-emerald-200/70">
+        <div class="text-xs text-zinc-400">
           {{ opt.description }}
         </div>
       </button>
@@ -133,7 +133,7 @@ function selectOption(optionId) {
       <!-- UX magic -->
       <p
         v-if="availableOptions.length === 0"
-        class="text-sm text-emerald-200/60 italic"
+        class="text-sm text-zinc-400 italic"
       >
         No hay opciones disponibles con el estado actual del proyecto.
         Cada decisión previa pesa.

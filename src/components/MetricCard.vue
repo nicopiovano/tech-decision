@@ -21,11 +21,16 @@ const props = defineProps({
         ? 'border-rose-500/50 bg-rose-500/10'
         : tone === 'good'
           ? 'border-emerald-400/50 bg-emerald-400/10'
-          : 'border-emerald-900 bg-emerald-900/20',
+          : 'border-zinc-800 bg-zinc-900/40',
     ]"
   >
     <div class="flex items-baseline justify-between gap-3">
-      <div class="text-xs font-medium text-emerald-100/80">{{ label }}</div>
+      <div
+        class="text-xs font-medium"
+        :class="tone === 'bad' ? 'text-rose-200' : tone === 'good' ? 'text-emerald-200' : 'text-zinc-300'"
+      >
+        {{ label }}
+      </div>
       <div
         class="text-lg font-semibold tabular-nums"
         :class="tone === 'bad' ? 'text-rose-100' : tone === 'good' ? 'text-emerald-100' : ''"
@@ -33,7 +38,13 @@ const props = defineProps({
         {{ value }}
       </div>
     </div>
-    <div v-if="hint" class="mt-1 text-xs text-emerald-200/60">{{ hint }}</div>
+    <div
+      v-if="hint"
+      class="mt-1 text-xs"
+      :class="tone === 'bad' ? 'text-rose-200/70' : tone === 'good' ? 'text-emerald-200/70' : 'text-zinc-500'"
+    >
+      {{ hint }}
+    </div>
   </div>
 </template>
 

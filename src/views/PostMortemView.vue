@@ -122,7 +122,7 @@ function restart() {
     <!-- Header -->
     <header class="space-y-2">
       <h1 class="text-xl font-semibold">Post-mortem</h1>
-      <p class="text-sm text-emerald-100/80">
+      <p class="text-sm text-zinc-300">
         Evaluación final del proyecto: decisiones tomadas, impacto acumulado y consecuencias.
       </p>
     </header>
@@ -134,7 +134,7 @@ function restart() {
         <li
           v-for="(insight, i) in insights"
           :key="i"
-          class="text-sm text-emerald-50"
+          class="text-sm text-zinc-200"
         >
           {{ insight }}
         </li>
@@ -142,16 +142,16 @@ function restart() {
     </section>
 
     <!-- Contexto del proyecto -->
-    <div class="rounded-lg border border-emerald-900 bg-emerald-900/20 p-4 text-sm text-emerald-100/80">
-      <div class="flex flex-wrap items-center gap-3 text-xs text-emerald-200/60">
-        <span><span class="text-emerald-200/50">Proyecto:</span> {{ project.projectName }}</span>
+    <div class="rounded-lg border border-zinc-800 bg-zinc-900/40 p-4 text-sm text-zinc-300">
+      <div class="flex flex-wrap items-center gap-3 text-xs text-zinc-400">
+        <span><span class="text-zinc-500">Proyecto:</span> {{ project.projectName }}</span>
         <span>·</span>
-        <span><span class="text-emerald-200/50">Equipo:</span> {{ project.teamSize }}</span>
+        <span><span class="text-zinc-500">Equipo:</span> {{ project.teamSize }}</span>
         <span>·</span>
-        <span><span class="text-emerald-200/50">Dominio:</span> {{ project.domain }}</span>
+        <span><span class="text-zinc-500">Dominio:</span> {{ project.domain }}</span>
       </div>
       <div class="mt-2">
-        Tomaste <span class="font-semibold text-emerald-50">{{ decisionCount }}</span> decisiones.
+        Tomaste <span class="font-semibold text-zinc-100">{{ decisionCount }}</span> decisiones.
       </div>
     </div>
 
@@ -169,13 +169,13 @@ function restart() {
 
     <!-- Gráficos (mismo lugar donde está toda la data) -->
     <div class="grid gap-3 md:grid-cols-2">
-      <div class="rounded-lg border border-emerald-900 bg-emerald-900/20 p-4">
+      <div class="rounded-lg border border-zinc-800 bg-zinc-900/40 p-4">
         <div class="text-sm font-semibold">Evolución (métricas)</div>
         <div class="mt-3">
           <LineMetricsChart :history="project.history" :metric-keys="project.metricKeys" />
         </div>
       </div>
-      <div class="rounded-lg border border-emerald-900 bg-emerald-900/20 p-4">
+      <div class="rounded-lg border border-zinc-800 bg-zinc-900/40 p-4">
         <div class="text-sm font-semibold">Salud actual</div>
         <div class="mt-3">
           <RadarHealthChart :metrics="project.metrics" />
@@ -184,27 +184,27 @@ function restart() {
     </div>
 
     <!-- Timeline de decisiones (solo si hay decisiones reales) -->
-    <div v-if="decisionCount > 0" class="rounded-lg border border-emerald-900 bg-emerald-900/20 p-4">
+    <div v-if="decisionCount > 0" class="rounded-lg border border-zinc-800 bg-zinc-900/40 p-4">
       <div class="flex items-center justify-between gap-3">
         <div class="text-sm font-semibold">Decisiones tomadas</div>
-        <div class="rounded-full border border-emerald-800 bg-emerald-950/60 px-2 py-0.5 text-xs text-emerald-100/80">
+        <div class="rounded-full border border-zinc-700 bg-zinc-950/60 px-2 py-0.5 text-xs text-zinc-300">
           {{ decisionCount }}
         </div>
       </div>
 
-      <ol class="mt-3 space-y-2 text-sm text-emerald-100/80">
+      <ol class="mt-3 space-y-2 text-sm text-zinc-300">
         <li v-for="h in decisionsHistoryEnriched" :key="h.step" class="flex gap-3">
-          <div class="w-7 shrink-0 text-right tabular-nums text-emerald-200/60">{{ h.step }}.</div>
+          <div class="w-7 shrink-0 text-right tabular-nums text-zinc-500">{{ h.step }}.</div>
 
           <div>
-            <div class="text-xs text-emerald-200/60">{{ h.decisionTitle }}</div>
+            <div class="text-xs text-zinc-500">{{ h.decisionTitle }}</div>
 
             <!-- Marca visual de decisiones críticas -->
             <div
               class="font-medium"
               :class="{
                 'text-red-400': h.metrics.technicalDebt > 80,
-                'text-emerald-50': h.metrics.technicalDebt <= 80,
+                'text-zinc-100': h.metrics.technicalDebt <= 80,
               }"
             >
               {{ h.optionLabel }}
@@ -218,13 +218,13 @@ function restart() {
     <div class="flex items-center gap-3">
       <RouterLink
         to="/timeline"
-        class="rounded-md border border-emerald-800 px-4 py-2 text-sm font-medium text-emerald-50 hover:bg-emerald-900/30"
+        class="rounded-md border border-zinc-700 px-4 py-2 text-sm font-medium text-zinc-100 hover:bg-zinc-900"
       >
         Volver al timeline
       </RouterLink>
 
       <button
-        class="rounded-md bg-emerald-500 px-4 py-2 text-sm font-medium text-emerald-950 hover:bg-emerald-400"
+        class="rounded-md bg-zinc-200 px-4 py-2 text-sm font-medium text-zinc-900 hover:bg-white"
         @click="restart"
       >
         Reiniciar
