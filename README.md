@@ -1,112 +1,170 @@
-# Simulador de decisiones tecnicas
+# 🧠 Simulador de decisiones técnicas (Vue 3)
 
-Simulador 100% frontend sobre trade-offs tecnicos y sus consecuencias acumuladas.
-
-Este proyecto no es sobre elegir "la arquitectura correcta".
-Es sobre entender por que cada decision tecnica tiene un costo y como esos costos se componen con el tiempo.
-
-Simulas un proyecto real, atravesas sus fases y tomas decisiones bajo presion.
-El sistema no te juzga.
-Solo lo recuerda.
+Simulador **100% frontend** donde recorrés un proyecto de software por fases (setup → MVP → growth → scale → crisis) y tomás decisiones técnicas.
+Cada decisión aplica **efectos determinísticos** sobre métricas internas (deuda técnica, velocidad, estabilidad, moral, etc.) y se guarda un **historial** que alimenta los gráficos y el post‑mortem.
 
 ---
 
-## Que explora este proyecto
+## 🛠 Stack
 
-- Trade-offs entre velocidad, calidad y estabilidad
-- Como se acumula la deuda tecnica
-- Por que los atajos se sienten bien al principio y duelen despues
-- Como las decisiones de proceso afectan el resultado
-- Pensamiento sistemico aplicado a desarrollo de software
-
----
-
-## Como funciona
-
-1. Inicializas un proyecto (contexto, equipo, dominio)
-2. Avanzas por fases realistas: Setup, MVP, Growth, Scale, Crisis
-3. En cada fase elegis entre opciones tecnicas
-4. Cada opcion impacta metricas internas
-5. Se guarda un historial de snapshots (para charts y analisis)
-6. Terminas con un post-mortem de tus decisiones
-
-Toda la logica es deterministica y corre del lado del cliente (sin backend).
+| Tecnología | Uso |
+|------------|-----|
+| **Vue 3** | UI (Composition API, `script setup`) |
+| **Vite** | Dev server + build |
+| **Pinia** | Estado global (métricas + historial) |
+| **Vue Router** | Navegación por pantallas |
+| **Chart.js + vue-chartjs** | Line chart (evolución) + Radar (salud actual) |
+| **Tailwind CSS** | UI simple y clara (sin framework pesado) |
 
 ---
 
-## Metricas
+## 📋 Requisitos
 
-- technicalDebt (mas alto = peor)
-- velocity
-- maintainability
-- stability
-- teamMorale
-- timeToMarket (mas alto = peor / mas lento)
+- **Node.js** 18+ (recomendado 20+)
+- **npm**
 
 ---
 
-## Arquitectura
+## 🚀 Cómo levantar el proyecto
 
-Disenado como producto, no como demo.
+### 1) Instalar dependencias
 
-Principios:
+```bash
+npm install
+```
 
-- Single source of truth del estado del proyecto (Pinia)
-- Motor puro de decisiones (sin UI) que aplica efectos a metricas
-- Decisiones data-driven (JSON)
-- Snapshots inmutables de historial para charts y post-mortem
+### 2) Modo desarrollo
 
-Stack:
+```bash
+npm run dev
+```
 
-- Vue 3 (Composition API, script setup)
-- Vite
-- Pinia
-- Vue Router
-- Chart.js + vue-chartjs
-- Tailwind CSS (UI simple y clara)
+Vite te imprime la URL (por defecto suele ser `http://localhost:5173`).
+
+### 3) Build para producción
+
+```bash
+npm run build
+```
+
+### 4) Preview del build
+
+```bash
+npm run preview
+```
 
 ---
 
-## Estructura del proyecto
+## 🧭 Pantallas
+
+- `/intro`: explicación breve del simulador
+- `/setup`: formulario inicial del proyecto
+- `/timeline`: fases + historial de decisiones (con opción **Modificar**)
+- `/decision/:id`: tomar una decisión (o editar una anterior)
+- `/post-mortem`: resumen final + métricas + gráficos
+
+> Nota: `/dashboard` ya no existe; si accedés, redirige a `/post-mortem` por compatibilidad.
+
+---
+
+## 🧩 Arquitectura (pensada como producto)
+
+### Principios
+
+- **Data‑driven**: las decisiones viven en JSON, no hardcodeadas en UI.
+- **Motor puro**: el engine solo aplica efectos y genera snapshots; no sabe nada de UI.
+- **Single source of truth**: Pinia concentra el estado del proyecto.
+- **Historial inmutable**: cada respuesta genera un snapshot (ideal para charts y post‑mortem).
+
+### Flujo (en simple)
+
+1. El usuario elige una opción.
+2. Esa opción trae `effects` (deltas numéricos por métrica).
+3. El engine suma esos deltas y clampa a 0..100.
+4. El store guarda un snapshot en `history`.
+5. Los charts leen `history` y lo dibujan.
+
+---
+
+## 🗂 Datos: decisiones en JSON
+
+Archivo: `src/data/decisions.json`
+
+- Cada `decision` tiene `id`, `phase`, `title`, `prompt`, `options`.
+- Cada `option` tiene `effects` con deltas por métrica.
+
+Ejemplo (resumido):
+
+```json
+{
+  "id": "setup-001",
+  "phase": "setup",
+  "title": "Base técnica inicial",
+  "prompt": "¿Cómo equilibrás velocidad hoy vs mantenibilidad mañana?",
+  "options": [
+    {
+      "id": "monolith-pragmatic",
+      "label": "Monolito simple + buenas prácticas",
+      "effects": { "technicalDebt": -5, "velocity": 8, "stability": 4 }
+    }
+  ]
+}
+```
+
+---
+
+## 📈 Visualizaciones
+
+- **Evolución (métricas)**: line chart derivado de `history`.
+- **Salud actual**: radar chart que normaliza para que “alto sea mejor” (invierte deuda técnica y time‑to‑market).
+
+---
+
+## ✏️ Modificar decisiones anteriores (Timeline)
+
+En `/timeline` podés tocar **Modificar** en un paso ya respondido.
+
+- Al editar una respuesta, el store **reconstruye el historial desde el baseline** (para que todo quede consistente).
+- Si una decisión posterior queda inválida por reglas, el simulador corta el futuro y te fuerza a redecidir desde ese punto.
+
+---
+
+## 📁 Estructura principal
 
 ```txt
 src/
-  components/        // Componentes UI reutilizables
-  components/charts/ // Charts desacoplados (Line + Radar)
-  charts/            // Registro unico de Chart.js
-  data/              // decisions.json + helpers de acceso
-  engine/            // Motor puro (aplica efectos)
-  layouts/           // Layout principal
-  router/            // Rutas
-  stores/            // Store central (metricas + historial)
-  views/             // Pantallas (intro/setup/timeline/decision/dashboard/post-mortem)
+  charts/             // Registro único de Chart.js
+  components/
+    charts/           // Line + Radar (desacoplados del store)
+  data/               // decisions.json + helpers de acceso (repo)
+  engine/             // Motor puro (aplica efectos)
+  layouts/            // Shell (header + contenido)
+  router/             // Rutas
+  stores/             // Store central (métricas + historial)
+  views/              // Pantallas
 ```
 
 Archivos clave:
 
-- src/data/decisions.json: decisiones y efectos
-- src/engine/decisionEngine.js: aplica efectos y genera snapshots
-- src/stores/projectStore.js: estado global (metricas + historial)
+- `src/stores/projectStore.js`: estado global y acciones (`applyDecision`, `reviseDecision`)
+- `src/engine/decisionEngine.js`: `applyEffects` + snapshots
+- `src/data/decisions.json`: decisiones y efectos
+- `src/components/charts/LineMetricsChart.vue`: evolución por step
 
 ---
 
-## Visualizaciones
+## 📜 Scripts disponibles
 
-- Line chart: evolucion de metricas a lo largo del tiempo (history)
-- Radar chart: salud actual del proyecto (normaliza para que alto sea mejor)
+| Comando | Descripción |
+|---------|-------------|
+| `npm run dev` | Servidor de desarrollo (Vite) |
+| `npm run build` | Build para producción |
+| `npm run preview` | Preview del build |
 
 ---
 
-## Correr local
+## 💡 Notas
 
-```bash
-npm install
-npm run dev
-```
-
-Build / preview:
-
-```bash
-npm run build
-npm run preview
-```
+- No hay backend: todo corre en el navegador.
+- El simulador es **determinístico**: a mismas decisiones, mismo resultado.
+- Los charts se derivan del historial: no se recalculan “a mano” desde UI.
