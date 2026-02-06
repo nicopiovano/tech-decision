@@ -131,7 +131,17 @@ export const useProjectStore = defineStore('project', {
         throw new Error('Project not initialized. Call initProject() first.')
       }
 
-      // Si veníamos de una edición que invalidó el futuro, al tomar una decisión válida seguimos normal.
+      // Límite producto: no se puede responder "cualquier" decisión desde la UI (ej. usando back del navegador).
+      // Solo permitimos contestar la próxima decisión esperada según el historial actual (o el override si existe).
+      const expected = this.nextDecisionId
+      if (expected === null) {
+        throw new Error('Project already finished. No more decisions to apply.')
+      }
+      if (decisionId !== expected) {
+        throw new Error(`Out of order decision. Expected ${expected}, got ${decisionId}.`)
+      }
+
+      // Si veníamos de una edición que invalidó el futuro, al tomar la decisión esperada seguimos normal.
       this.overrideNextDecisionId = null
 
       const decision = getDecisionById(decisionId)

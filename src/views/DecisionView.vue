@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref, watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useProjectStore } from '@/stores/projectStore'
 import { getDecisionById } from '@/data/decisionsRepo'
@@ -8,6 +8,7 @@ import { isOptionAvailable } from '@/engine/availability'
 const route = useRoute()
 const router = useRouter()
 const projectStore = useProjectStore()
+const error = ref('')
 
 /* ─────────────────────────────
    Edit mode (from timeline)
@@ -27,6 +28,23 @@ const isEditMode = computed(() => editStep.value !== null)
 onMounted(() => {
   if (!projectStore.isInitialized) {
     router.replace('/setup')
+  }
+})
+
+// Si el usuario vuelve hacia atrás con el navegador, evitamos que pueda "re-contestar" decisiones.
+watchEffect(() => {
+  if (!projectStore.isInitialized) return
+  if (isEditMode.value) return
+
+  if (projectStore.isFinished) {
+    router.replace('/post-mortem')
+    return
+  }
+
+  const expected = projectStore.nextDecisionId
+  const current = String(route.params.id || '')
+  if (expected && current !== expected) {
+    router.replace(`/decision/${expected}`)
   }
 })
 
@@ -63,6 +81,7 @@ const availableOptions = computed(() => {
    Actions
 ───────────────────────────── */
 function selectOption(optionId) {
+  error.value = ''
   if (isEditMode.value) {
     projectStore.reviseDecision({
       step: editStep.value,
@@ -73,10 +92,13 @@ function selectOption(optionId) {
     return
   }
 
-  projectStore.applyDecision({ decisionId: decision.value.id, optionId })
-
-  if (projectStore.isFinished) router.push('/post-mortem')
-  else router.push(`/decision/${projectStore.nextDecisionId}`)
+  try {
+    projectStore.applyDecision({ decisionId: decision.value.id, optionId })
+    if (projectStore.isFinished) router.push('/post-mortem')
+    else router.push(`/decision/${projectStore.nextDecisionId}`)
+  } catch (e) {
+    error.value = e instanceof Error ? e.message : 'No se pudo aplicar la decisión.'
+  }
 }
 </script>
 
@@ -97,6 +119,13 @@ function selectOption(optionId) {
         Editando respuesta del paso #{{ editStep }} (se recalcula el historial).
       </p>
     </header>
+
+    <div
+      v-if="error"
+      class="rounded-lg border border-rose-500/40 bg-rose-500/10 p-3 text-sm text-rose-200"
+    >
+      {{ error }}
+    </div>
 
     <!-- Decision missing -->
     <div v-if="!decision" class="space-y-3">
