@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
+  <!-- Tech/terminal glyph: neutral for dark backgrounds -->
+  <rect x="6" y="10" width="52" height="44" rx="10" fill="#0A0A0A"/>
+  <rect x="6" y="10" width="52" height="44" rx="10" stroke="#D4D4D8" stroke-width="2"/>
+
+  <!-- Prompt chevron -->
+  <path d="M18 28 L26 32 L18 36" stroke="#D4D4D8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Cursor -->
+  <path d="M30 38 H44" stroke="#34D399" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- Small circuit nodes -->
+  <circle cx="46" cy="22" r="2.2" fill="#D4D4D8"/>
+  <circle cx="50" cy="26" r="2.2" fill="#D4D4D8"/>
+  <path d="M46 22 L50 26" stroke="#D4D4D8" stroke-width="2" stroke-linecap="round"/>
+</svg>
+
