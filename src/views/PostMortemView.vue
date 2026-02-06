@@ -28,18 +28,20 @@ const insights = computed(() =>
  */
 function toneForMetric(key, value) {
   const v = Number(value ?? 0)
-  const highIsBad = key === 'technicalDebt' || key === 'timeToMarket'
+  // - technicalDebt y timeToMarket: valores altos son “buenos” (verde).
+  // - el resto de métricas: valores altos son “malos” (rojo).
+  const highIsGood = key === 'technicalDebt' || key === 'timeToMarket'
 
   // Umbrales simples (producto): "muy mal" y "muy bien" para destacar extremos.
   // Ajustable más adelante con calibración.
-  if (highIsBad) {
-    if (v >= 70) return 'bad'
-    if (v <= 30) return 'good'
+  if (highIsGood) {
+    if (v >= 70) return 'good'
+    if (v <= 30) return 'bad'
     return 'neutral'
   }
 
-  if (v <= 30) return 'bad'
-  if (v >= 70) return 'good'
+  if (v >= 70) return 'bad'
+  if (v <= 30) return 'good'
   return 'neutral'
 }
 
