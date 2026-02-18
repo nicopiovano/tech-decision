@@ -34,9 +34,27 @@ const route = useRoute()
       </div>
     </header>
 
-    <main class="mx-auto w-full max-w-5xl px-4 py-8">
+    <main class="mx-auto w-full max-w-5xl px-4 pt-8 pb-24">
       <RouterView />
     </main>
+
+    <!-- Firma / stack -->
+    <div class="pointer-events-none fixed inset-x-0 bottom-3 z-50 flex justify-center px-4">
+      <div class="pointer-events-auto max-w-xl rounded-2xl border border-white/10 bg-zinc-900/70 px-3 py-2 text-xs text-zinc-100 shadow-sm backdrop-blur">
+        <span class="font-medium">Desarrollado con</span>
+        <span class="mx-2 text-zinc-300">
+          Vue · Tailwind · Pinia · Chart.js · AI
+        </span>
+        <a
+          href="https://nico-piovano-porfolio.vercel.app/es"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="underline underline-offset-2 hover:opacity-80"
+        >
+          <span class="font-medium">by Nico Piovano</span>
+        </a>
+      </div>
+    </div>
   </div>
 </template>
 
