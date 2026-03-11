@@ -46,7 +46,7 @@ const route = useRoute()
           Vue · Tailwind · Pinia · Chart.js · AI
         </span>
         <a
-          href="https://nico-piovano-porfolio.vercel.app/es"
+          href="https://nico-piovano-porfolio.vercel.app"
           target="_blank"
           rel="noopener noreferrer"
           class="underline underline-offset-2 hover:opacity-80"
